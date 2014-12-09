@@ -1,4 +1,4 @@
-package com.peking2.redis
+package com.github.peking2.redis
 
 import org.apache.commons.codec.digest.DigestUtils
 import scala.concurrent.Await

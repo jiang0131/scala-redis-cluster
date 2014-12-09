@@ -1,4 +1,4 @@
-package com.peking2.redis
+package com.github.peking2.redis
 
 case class Host(id:Int, host:String, port:Int)
 
