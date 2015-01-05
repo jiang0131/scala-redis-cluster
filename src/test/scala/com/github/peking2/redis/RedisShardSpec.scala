@@ -26,4 +26,37 @@ class RedisShardSpec extends FlatSpec with Matchers {
     val res = rs.get("12345")
     res.get shouldBe ("1")
   }
+
+  "expire" should "works" in {
+    val res = rs.expire("12345", 600)
+    res shouldBe true
+  }
+
+  "ttl" should "return ttl in seconds" in {
+    val res = rs.ttl("12345")
+    res.isRight shouldBe true
+    res.right.get should be <= 600 
+  }
+
+  "ttlNotSet" should "return Left[true]" in {
+    rs.set("abcde", "1")
+    val res = rs.ttl("abcde")
+    res.isLeft shouldBe true
+    res.left.get shouldBe true
+  }
+
+  "ttlNoKey" should "return Left[false]" in {
+    val res = rs.ttl("6789")
+    res.isLeft shouldBe true
+    res.left.get shouldBe false
+  }
+
+  "expireAt" should "works" in {
+    rs.set("abcde", "1")
+    val res = rs.expireAt("abcde", 7258032)
+    res shouldBe true
+    val resTtl = rs.ttl("12345")
+    resTtl.isRight shouldBe true
+    resTtl.right.get should be >= 0
+  }
 }

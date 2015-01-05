@@ -51,6 +51,21 @@ class RedisShard private (config: Config) {
     val f = getNode(key).redis.zRange(key, start, stop)
     Await.result(f, 10 second).toVector
   }
+
+  def expireAt(key: String, timestamp: Long):Boolean = {
+    val f = getNode(key).redis.expireAt(key, timestamp)
+    Await.result(f, 10 second)
+  }
+
+  def expire(key: String, seconds: Int):Boolean = {
+    val f = getNode(key).redis.expire(key, seconds)
+    Await.result(f, 10 second)
+  }
+
+  def ttl(key: String):Either[Boolean, Int] = {
+    val f = getNode(key).redis.ttl(key)
+    Await.result(f, 10 second)
+  }
 }
 
 object RedisShard {
