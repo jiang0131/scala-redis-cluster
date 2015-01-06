@@ -2,7 +2,7 @@ name := "scala-redis-cluster"
 
 organization := "com.github.peking2"
 
-version := "0.1"
+version := "0.2"
 
 scalaVersion := "2.11.2"
 
